@@ -1,0 +1,1285 @@
+
+1.	Random shuffling the elements in an array
+
+import java.util.Random;
+public class ShuffleArray {
+  public static void shuffle(int[] array) {
+    Random random = new Random();
+    for (int i = array.length - 1; i > 0; i--) {
+      int j = random.nextInt(i + 1); // Generate random index between 0 and i (inclusive)
+      int temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+  }
+  public static void main(String[] args) {
+    int[] myArray = {1, 2, 3, 4, 5};
+    shuffle(myArray);
+    for (int num : myArray) {
+      System.out.print(num + " ");
+    }
+  }
+}
+
+
+2.	Write a program that finds the number of items above the average of all items.
+
+public class CountAboveAverage {
+
+  public static void main(String[] args) {
+    int[] numbers = {10, 20, 35, 15, 7};
+    int countAboveAverage = countAboveAverage(numbers);
+    System.out.println("Number of items above average: " + countAboveAverage);
+  }
+
+  public static int countAboveAverage(int[] numbers) {
+    int sum = 0;
+    for (int num : numbers) {
+      sum += num;
+    }
+    double average = (double) sum / numbers.length;
+
+    int count = 0;
+    for (int num : numbers) {
+      if (num > average) {
+        count++;
+      }
+    }
+    return count;
+  }
+}
+
+
+3.	Write a program to count the occurrences of each letter in an array of characters.
+
+public class CharacterCount {
+
+  public static void main(String[] args) {
+    char[] chars = {'a', 'b', 'c', 'a', 'c', 'd'};
+    int[] charCounts = countCharacters(chars);
+    printCharacterCounts(chars, charCounts);
+  }
+
+  public static int[] countCharacters(char[] chars) {
+    // Assuming all characters are ASCII (lowercase and uppercase)
+    int[] charCounts = new int[256]; // Create an array to store counts for all ASCII characters
+    for (char ch : chars) {
+      charCounts[ch]++; // Increment the count for the current character
+    }
+    return charCounts;
+  }
+
+  public static void printCharacterCounts(char[] chars, int[] charCounts) {
+    for (int i = 0; i < chars.length; i++) {
+      if (charCounts[chars[i]] > 0) {
+        System.out.println("Character '" + chars[i] + "' occurred " + charCounts[chars[i]] + " times.");
+        charCounts[chars[i]] = 0; // Reset count to avoid duplicates if printing multiple times
+      }
+    }
+  }
+}
+
+4.	Searching
+
+public class CharacterCount {
+
+  public static void main(String[] args) {
+    char[] chars = {'a', 'b', 'c', 'a', 'c', 'd'};
+    int[] charCounts = countCharacters(chars);
+    printCharacterCounts(chars, charCounts);
+  }
+
+  public static int[] countCharacters(char[] chars) {
+    // Assuming all characters are ASCII (lowercase and uppercase)
+    int[] charCounts = new int[256]; // Create an array to store counts for all ASCII characters
+    for (char ch : chars) {
+      charCounts[ch]++; // Increment the count for the current character
+    }
+    return charCounts;
+  }
+
+  public static void printCharacterCounts(char[] chars, int[] charCounts) {
+    for (int i = 0; i < chars.length; i++) {
+      if (charCounts[chars[i]] > 0) {
+        System.out.println("Character '" + chars[i] + "' occurred " + charCounts[chars[i]] + " times.");
+        charCounts[chars[i]] = 0; // Reset count to avoid duplicates if printing multiple times
+      }
+    }
+  }
+}
+
+5.	Write a program that prompts the user to enter the number of students, the students’ names, and their scores, and prints student names in decreasing order of their scores.
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class SortStudentsByScore {
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    // Get number of students
+    System.out.print("Enter the number of students: ");
+    int numStudents = scanner.nextInt();
+    scanner.nextLine(); // Consume newline character
+
+    // Create ArrayList to store Student objects
+    ArrayList<Student> students = new ArrayList<>();
+
+    // Get student data (name and score)
+    for (int i = 0; i < numStudents; i++) {
+      System.out.print("Enter student " + (i + 1) + " name: ");
+      String name = scanner.nextLine();
+      System.out.print("Enter student " + (i + 1) + " score: ");
+      int score = scanner.nextInt();
+      scanner.nextLine(); // Consume newline character
+
+      // Create Student object and add to ArrayList
+      students.add(new Student(name, score));
+    }
+
+    // Sort students by score in descending order (using a custom comparator)
+    Collections.sort(students, new ScoreComparator());
+
+    // Print student names in descending order of scores
+    System.out.println("\nStudents sorted by score (descending):");
+    for (Student student : students) {
+      System.out.println(student.getName());
+    }
+
+    scanner.close();
+  }
+}
+
+class Student {
+  private String name;
+  private int score;
+
+  public Student(String name, int score) {
+    this.name = name;
+    this.score = score;
+  }
+
+  public String getName() {
+    return name;
+  }
+  public int getScore() {
+    return score;
+  }
+}
+class ScoreComparator implements Comparator<Student> {
+  @Override
+  public int compare(Student student1, Student student2) {
+    return Integer.compare(student2.getScore(), student1.getScore()); // Descending order
+  }
+}
+ 
+6.	Write two overloaded methods that return the average of an array with the following headers: public static int average(int[] array) public static double average(double[] array) Write a test program that prompts the user to enter ten double values, invokes this method, and displays the average value.
+
+import java.util.Scanner; // Import Scanner for user input
+
+public class AverageCalculator {
+
+  // Method to calculate average of an integer array
+  public static int average(int[] array) {
+    int sum = 0;
+    for (int num : array) {
+      sum += num;
+    }
+    return sum / array.length;
+  }
+
+  // Method to calculate average of a double array (using double to avoid integer division)
+  public static double average(double[] array) {
+    double sum = 0.0;
+    for (double num : array) {
+      sum += num;
+    }
+    return sum / array.length;
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    // Prompt user to enter 10 double values
+    System.out.println("Enter 10 double values:");
+    double[] doubleArray = new double[10];
+    for (int i = 0; i < 10; i++) {
+      doubleArray[i] = scanner.nextDouble();
+    }
+
+    // Calculate and display average using overloaded method
+    double average = average(doubleArray);
+    System.out.println("The average of the entered values is: " + average);
+
+    scanner.close();
+  }
+}
+
+
+
+7.	Write a method that finds the smallest element in an array of double values using the following header: public static double min(double[] array) Write a test program that prompts the user to enter ten numbers, invokes this method to return the minimum value, and displays the minimum value
+
+import java.util.Scanner;
+
+public class MinValue {
+
+  public static double min(double[] array) {
+    if (array.length == 0) {
+      throw new IllegalArgumentException("Array cannot be empty");
+    }
+
+    double min = array[0];
+    for (double num : array) {
+      if (num < min) {
+        min = num;
+      }
+    }
+    return min;
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    // Prompt user to enter 10 double values
+    System.out.println("Enter 10 double values:");
+    double[] doubleArray = new double[10];
+    for (int i = 0; i < 10; i++) {
+      doubleArray[i] = scanner.nextDouble();
+    }
+
+    // Find and display the minimum value using the min method
+    try {
+      double minValue = min(doubleArray);
+      System.out.println("The minimum value in the array is: " + minValue);
+    } catch (IllegalArgumentException e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+
+    scanner.close();
+  }
+}
+
+
+8.	Write a method that returns a new array by eliminating the duplicate values in the array using the following method header: public static int[] eliminateDuplicates(int[] list) Write a test program that reads in ten integers, invokes the method, and displays the result.
+
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class EliminateDuplicates {
+
+  public static int[] eliminateDuplicates(int[] list) {
+    HashSet<Integer> uniqueElements = new HashSet<>();
+    for (int num : list) {
+      uniqueElements.add(num);
+    }
+
+    // Convert HashSet to int array (can be more efficient for large datasets)
+    int[] uniqueArray = new int[uniqueElements.size()];
+    int index = 0;
+    for (int num : uniqueElements) {
+      uniqueArray[index++] = num;
+    }
+    return uniqueArray;
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    // Prompt user to enter 10 integers
+    System.out.println("Enter 10 integers:");
+    int[] list = new int[10];
+    for (int i = 0; i < 10; i++) {
+      list[i] = scanner.nextInt();
+    }
+
+    // Eliminate duplicates and display the result
+    int[] uniqueList = eliminateDuplicates(list);
+    System.out.println("The list after eliminating duplicates:");
+    for (int num : uniqueList) {
+      System.out.print(num + " ");
+    }
+
+    scanner.close();
+  }
+}
+
+
+9.	Write a program that randomly generates an array of 100,000 integers and a key. Estimate the execution time of invoking the linearSearch method . Sort the array and estimate the execution time of invoking the binarySearch method. You can use the following code template to obtain the execution time:  long startTime = System.currentTimeMillis(); perform the task; long endTime = System.currentTimeMillis(); long executionTime = endTime - startTime;
+
+import java.util.Random;
+import java.util.Arrays;
+public class SearchTimeComparison {
+
+  public static void main(String[] args) {
+    int size = 100_000;
+    int key = new Random().nextInt(size); // Random key within array bounds
+
+    // Generate random integer array
+    int[] array = new int[size];
+    Random random = new Random();
+    for (int i = 0; i < size; i++) {
+      array[i] = random.nextInt();
+    }
+
+    // Estimate execution time for linear search
+    long startTime = System.currentTimeMillis();
+    int linearSearchResult = linearSearch(array, key);
+    long endTime = System.currentTimeMillis();
+    long linearSearchTime = endTime - startTime;
+    System.out.println("Linear search execution time (ms): " + linearSearchTime);
+
+    // Check if key is found before sorting for meaningful binary search comparison
+    if (linearSearchResult == -1) {
+      System.out.println("Key not found in the array, skipping binary search.");
+    } else {
+      // Sort the array (assuming ascending order)
+      Arrays.sort(array);
+
+      // Estimate execution time for binary search
+      startTime = System.currentTimeMillis();
+      int binarySearchResult = binarySearch(array, key);
+      endTime = System.currentTimeMillis();
+      long binarySearchTime = endTime - startTime;
+      System.out.println("Binary search execution time (ms): " + binarySearchTime);
+    }
+  }
+
+  public static int linearSearch(int[] array, int key) {
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == key) {
+        return i; // Key found at index i
+      }
+    }
+    return -1; // Key not found
+  }
+
+  public static int binarySearch(int[] array, int key) {
+    int left = 0;
+    int right = array.length - 1;
+
+    while (left <= right) {
+      int mid = left + (right - left) / 2;
+
+      if (array[mid] == key) {
+        return mid; // Key found at middle index
+      } else if (array[mid] < key) {
+        left = mid + 1; // Search right half
+      } else {
+        right = mid - 1; // Search left half
+      }
+    }
+    return -1; // Key not found
+  }
+}
+
+
+10.	The arrays list1 and list2 are strictly identical if their corresponding elements are equal. Write a method that returns true if list1 and list2 are strictly identical, using the following header: public static boolean equals(int[] list1, int[] list2) Write a test program that prompts the user to enter two lists of integers and displays whether the two are strictly identical. Here are the sample runs.
+
+
+import java.util.Scanner;
+
+public class ArrayComparison {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter the first list
+        System.out.print("Enter the size of the first list: ");
+        int size1 = scanner.nextInt();
+        int[] list1 = new int[size1];
+        System.out.print("Enter the elements of the first list: ");
+        for (int i = 0; i < size1; i++) {
+            list1[i] = scanner.nextInt();
+        }
+
+        // Prompt the user to enter the second list
+        System.out.print("Enter the size of the second list: ");
+        int size2 = scanner.nextInt();
+        int[] list2 = new int[size2];
+        System.out.print("Enter the elements of the second list: ");
+        for (int i = 0; i < size2; i++) {
+            list2[i] = scanner.nextInt();
+        }
+
+        // Check if the two lists are strictly identical
+        if (equals(list1, list2)) {
+            System.out.println("The two lists are strictly identical.");
+        } else {
+            System.out.println("The two lists are not strictly identical.");
+        }
+    }
+
+    public static boolean equals(int[] list1, int[] list2) {
+        if (list1.length != list2.length) {
+            return false;
+        }
+
+        for (int i = 0; i < list1.length; i++) {
+            if (list1[i] != list2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+11.	
+Suppose the weekly hours for all employees are stored in a two-dimensional array. Each row records an employee’s seven-day work hours with seven columns. For example, the following array stores the work hours for eight employees. Write a program that displays employees and their total hours in decreasing order of the total hours. 
+
+import java.util.*;
+
+public class EmployeeHours {
+    public static void main(String[] args) {
+        int[][] hours = {
+            {2, 4, 3, 4, 5, 8, 8},
+            {7, 3, 4, 3, 3, 4, 4},
+            {3, 3, 4, 3, 3, 2, 2},
+            {9, 3, 4, 7, 3, 4, 1},
+            {3, 5, 4, 3, 6, 3, 8},
+            {3, 4, 4, 6, 3, 4, 4},
+            {3, 7, 4, 8, 3, 8, 4},
+            {6, 3, 5, 9, 2, 7, 9}
+        };
+
+        int[] totalHours = new int[hours.length];
+        for (int i = 0; i < hours.length; i++) {
+            int sum = 0;
+            for (int j = 0; j < hours[i].length; j++) {
+                sum += hours[i][j];
+            }
+            totalHours[i] = sum;
+        }
+
+        // Sort employees by total hours
+        for (int i = 0; i < totalHours.length - 1; i++) {
+            for (int j = i + 1; j < totalHours.length; j++) {
+                if (totalHours[i] < totalHours[j]) {
+                    int temp = totalHours[i];
+                    totalHours[i] = totalHours[j];
+                    totalHours[j] = temp;
+
+                    int[] tempHours = hours[i];
+                    hours[i] = hours[j];
+                    hours[j] = tempHours;
+                }
+            }
+        }
+
+        // Display employees and their total hours
+        for (int i = 0; i < hours.length; i++) {
+            System.out.println("Employee " + (i + 1) + " - Total Hours: " + totalHours[i]);
+        }
+    }
+}
+
+12.	Write a program that prompts the user to enter the length of a square matrix, randomly fills in 0s and 1s into the matrix, prints the matrix, and finds the rows, columns, and diagonals with all 0s or 1s. Here is a sample run of the program:
+
+
+import java.util.*;
+
+public class SquareMatrix {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter the size of the square matrix
+        System.out.print("Enter the size for the matrix: ");
+        int size = scanner.nextInt();
+
+        // Create a square matrix of the specified size
+        int[][] matrix = new int[size][size];
+
+        // Fill the matrix with random 0s and 1s
+        Random random = new Random();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                matrix[i][j] = random.nextInt(2); // Generates random number either 0 or 1
+            }
+        }
+
+        // Print the matrix
+        printMatrix(matrix);
+
+        // Find and print rows with all 0s or 1s
+        findAndPrintRows(matrix);
+
+        // Find and print columns with all 0s or 1s
+        findAndPrintColumns(matrix);
+
+        // Find and print diagonals with all 0s or 1s
+        findAndPrintDiagonals(matrix);
+    }
+
+    // Method to print the matrix
+    public static void printMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+    // Method to find and print rows with all 0s or 1s
+    public static void findAndPrintRows(int[][] matrix) {
+        boolean found = false;
+        for (int i = 0; i < matrix.length; i++) {
+            int firstValue = matrix[i][0];
+            boolean allSame = true;
+            for (int j = 1; j < matrix[i].length; j++) {
+                if (matrix[i][j] != firstValue) {
+                    allSame = false;
+                    break;
+                }
+            }
+            if (allSame) {
+                System.out.println("All " + (firstValue == 0 ? "0s" : "1s") + " on row " + (i + 1));
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No same numbers on any row");
+        }
+    }
+
+    // Method to find and print columns with all 0s or 1s
+    public static void findAndPrintColumns(int[][] matrix) {
+        boolean found = false;
+        for (int j = 0; j < matrix.length; j++) {
+            int firstValue = matrix[0][j];
+            boolean allSame = true;
+            for (int i = 1; i < matrix.length; i++) {
+                if (matrix[i][j] != firstValue) {
+                    allSame = false;
+                    break;
+                }
+            }
+            if (allSame) {
+                System.out.println("All " + (firstValue == 0 ? "0s" : "1s") + " on column " + (j + 1));
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No same numbers on any column");
+        }
+    }
+
+    // Method to find and print diagonals with all 0s or 1s
+    public static void findAndPrintDiagonals(int[][] matrix) {
+        boolean allSameDiagonal1 = true; // for top-left to bottom-right diagonal
+        boolean allSameDiagonal2 = true; // for top-right to bottom-left diagonal
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][i] != matrix[0][0]) {
+                allSameDiagonal1 = false;
+            }
+            if (matrix[i][matrix.length - 1 - i] != matrix[0][matrix.length - 1]) {
+                allSameDiagonal2 = false;
+            }
+        }
+        if (allSameDiagonal1) {
+            System.out.println("All " + (matrix[0][0] == 0 ? "0s" : "1s") + " on the major diagonal");
+        } else {
+            System.out.println("No same numbers on the major diagonal");
+        }
+        if (allSameDiagonal2) {
+            System.out.println("All " + (matrix[0][matrix.length - 1] == 0 ? "0s" : "1s") + " on the sub-diagonal");
+        } else {
+            System.out.println("No same numbers on the sub-diagonal");
+        }
+    }
+}
+
+
+13.	Design a class named Fan to represent a fan. The class contains: 
+If the fan is on, the method returns the fan speed, color, and radius in one combined string. If the fan is not on, the method returns the fan color and radius along with the string “fan is off” in one combined string. Write a test program that creates two Fan objects. Assign maximum speed, radius 10, color yellow, and turn it on to the first object. Assign medium speed, radius 5, color blue, and turn it off to the second object. Display the objects by invoking their toString method.
+
+public class Fan {
+    public static final int SLOW = 1;
+    public static final int MEDIUM = 2;
+    public static final int FAST = 3;
+
+    private int speed;
+    private boolean on;
+    private double radius;
+    private String color;
+
+    // Constructor
+    public Fan() {
+        speed = SLOW;
+        on = false;
+        radius = 5;
+        color = "blue";
+    }
+
+    // Accessor and Mutator methods
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public boolean isOn() {
+        return on;
+    }
+
+    public void setOn(boolean on) {
+        this.on = on;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    // toString method
+    public String toString() {
+        if (on) {
+            return "Speed: " + speed + ", Color: " + color + ", Radius: " + radius;
+        } else {
+            return "Color: " + color + ", Radius: " + radius + ", Fan is off";
+        }
+    }
+
+    public static void main(String[] args) {
+        Fan fan1 = new Fan();
+        fan1.setSpeed(FAST);
+        fan1.setRadius(10);
+        fan1.setColor("yellow");
+        fan1.setOn(true);
+
+        Fan fan2 = new Fan();
+        fan2.setSpeed(MEDIUM);
+        fan2.setRadius(5);
+        fan2.setColor("blue");
+        fan2.setOn(false);
+
+        System.out.println("Fan 1: " + fan1.toString());
+        System.out.println("Fan 2: " + fan2.toString());
+    }
+}
+
+
+14.	Design a class named Account that contains: (Hint: The method getMonthlyInterest() is to return monthly interest, not the interest rate. Monthly interest is balance * monthlyInterestRate. monthlyInterestRate is annualInterestRate / 12. Note that annualInterestRate is a percentage, e.g., like 4.5%. You need to divide it by 100.) 
+Write a test program that creates an Account object with an account ID of 1122, a balance of $20,000, and an annual interest rate of 4.5%. Use the withdraw method to withdraw $2,500, use the deposit method to deposit $3,000, and print the balance, the monthly interest, and the date when this account was created.
+
+import java.util.Date;
+public class Account {
+    private int id;
+    private double balance;
+    private double annualInterestRate;
+    private Date dateCreated;
+    // Constructors
+    public Account() {
+        id = 0;
+        balance = 0;
+        annualInterestRate = 0;
+        dateCreated = new Date();
+    }
+    public Account(int id, double balance) {
+        this.id = id;
+        this.balance = balance;
+        annualInterestRate = 0;
+        dateCreated = new Date();
+    }
+  // Accessor and Mutator methods
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public double getBalance() {
+        return balance;
+    }
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+   public double getAnnualInterestRate() {
+        return annualInterestRate;
+    }
+    public void setAnnualInterestRate(double annualInterestRate) {
+        this.annualInterestRate = annualInterestRate;
+    }
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+    // Other methods
+    public double getMonthlyInterestRate() {
+        return annualInterestRate / 12 / 100; // convert percentage to decimal
+    }
+  public double getMonthlyInterest() {
+        return balance * getMonthlyInterestRate();
+}
+    public void withdraw(double amount) {
+        balance -= amount;
+}
+ public void deposit(double amount) {
+        balance += amount;
+}
+public static void main(String[] args) {
+        Account account = new Account(1122, 20000);
+        account.setAnnualInterestRate(4.5);
+account.withdraw(2500);
+        account.deposit(3000);
+System.out.println("Balance: $" + account.getBalance());
+        System.out.println("Monthly Interest: $" + account.getMonthlyInterest());
+System.out.println("Date Created: " + account.getDateCreated());
+    }
+}
+
+15.	The split method in the String class returns an array of strings consisting of the substrings split by the delimiters. However, the delimiters are not returned. Implement the following new method that returns an array of strings consisting of the substrings split by the matching delimiters, including the matching delimiters. public static String[] split(String s, String regex) For example, split("ab#12#453", "#") returns ab, #, 12, #, 453 in an array of String, and split("a?b?gf#e", "[?#]") returns a, b, ?, b, gf, #, and e in an array of String.
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class CustomSplit {
+    public static String[] split(String s, String regex) {
+        Pattern pattern = Pattern.compile("(" + regex + ")");
+        Matcher matcher = pattern.matcher(s);
+        
+        // Count the number of delimiters
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        
+        // Create an array to hold substrings and delimiters
+        String[] result = new String[count * 2 + 1];
+        
+        // Reset the matcher
+        matcher.reset();
+        
+        // Split the string by the matching delimiters, including the delimiters
+        int i = 0;
+        int lastIndex = 0;
+        while (matcher.find()) {
+            result[i++] = s.substring(lastIndex, matcher.start());
+            result[i++] = matcher.group();
+            lastIndex = matcher.end();
+        }
+        
+        // Add the remaining substring after the last delimiter
+        result[i] = s.substring(lastIndex);
+        
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String[] result1 = split("ab#12#453", "#");
+        String[] result2 = split("a?b?gf#e", "[?#]");
+        
+        // Print the results
+        System.out.println("Result 1:");
+        for (String str : result1) {
+            System.out.println(str);
+        }
+        
+        System.out.println("\nResult 2:");
+        for (String str : result2) {
+            System.out.println(str);
+        }
+    }
+}
+
+16.	Design a class named Person and its two subclasses named Student and Employee. Make Faculty and Staff subclasses of Employee. A person has a name, address, phone number, and email address. A student has a class status (freshman, sophomore, junior, or senior). Define the status as a constant. An employee has an office, salary, and date hired. Use the MyDate class defined in Programming Exercise 10.14 to create an object for date hired. A faculty member has office hours and a rank. A staff member has a title. Override the toString method in each class to display the class name and the person’s name. Write a test program that creates a Person, Student, Employee, Faculty, and Staff, and invokes their toString() methods.
+
+
+// MyDate class from Programming Exercise 10.14
+class MyDate {
+    private int year;
+    private int month;
+    private int day;
+
+    public MyDate(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
+    @Override
+    public String toString() {
+        return month + "/" + day + "/" + year;
+    }
+}
+
+// Person class
+class Person {
+    private String name;
+    private String address;
+    private String phoneNumber;
+    private String emailAddress;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Person: " + name;
+    }
+}
+
+// Student class
+class Student extends Person {
+    public static final String FRESHMAN = "Freshman";
+    public static final String SOPHOMORE = "Sophomore";
+    public static final String JUNIOR = "Junior";
+    public static final String SENIOR = "Senior";
+
+    private String classStatus;
+
+    public Student(String name, String classStatus) {
+        super(name);
+        this.classStatus = classStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Student: " + super.toString();
+    }
+}
+
+// Employee class
+class Employee extends Person {
+    private String office;
+    private double salary;
+    private MyDate dateHired;
+
+    public Employee(String name, String office, double salary, MyDate dateHired) {
+        super(name);
+        this.office = office;
+        this.salary = salary;
+        this.dateHired = dateHired;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee: " + super.toString();
+    }
+}
+
+// Faculty class
+class Faculty extends Employee {
+    private String officeHours;
+    private String rank;
+
+    public Faculty(String name, String office, double salary, MyDate dateHired, String officeHours, String rank) {
+        super(name, office, salary, dateHired);
+        this.officeHours = officeHours;
+        this.rank = rank;
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty: " + super.toString();
+    }
+}
+
+// Staff class
+class Staff extends Employee {
+    private String title;
+
+    public Staff(String name, String office, double salary, MyDate dateHired, String title) {
+        super(name, office, salary, dateHired);
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff: " + super.toString();
+    }
+}
+
+// Test program
+public class TestPersonHierarchy {
+    public static void main(String[] args) {
+        Person person = new Person("John Doe");
+        Student student = new Student("Alice Smith", Student.SOPHOMORE);
+        Employee employee = new Employee("Bob Johnson", "123 Main St", 50000, new MyDate(2024, 5, 1));
+        Faculty faculty = new Faculty("Jane Williams", "456 Oak St", 80000, new MyDate(2020, 3, 15), "9:00 AM - 5:00 PM", "Professor");
+        Staff staff = new Staff("Michael Davis", "789 Elm St", 60000, new MyDate(2023, 9, 10), "Secretary");
+
+        System.out.println(person);
+        System.out.println(student);
+        System.out.println(employee);
+        System.out.println(faculty);
+        System.out.println(staff);
+    }
+}
+
+
+17. Design a class named Triangle that extends GeometricObject. The class contains: 
+The toString() method is implemented as follows: return "Triangle: side1 = " + side1 + " side2 = " + side2 + " side3 = " + side3; Draw the UML diagrams for the classes Triangle and GeometricObject and implement the classes. Write a test program that prompts the user to enter three sides of the triangle, a color, and a Boolean value to indicate whether the triangle is filled. The program should create a Triangle object with these sides and set the color and filled properties using the input. The program should display the area, perimeter, color, and true or false to indicate whether it is filled or not.
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+// GeometricObject class
+class GeometricObject {
+    private String color;
+    private boolean filled;
+    public GeometricObject() {
+        color = "white";
+        filled = false;
+    }
+    public GeometricObject(String color, boolean filled) {
+        this.color = color;
+        this.filled = filled;
+    }
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+    public boolean isFilled() {
+        return filled;
+    }
+    public void setFilled(boolean filled) {
+        this.filled = filled;
+    }
+}
+// Triangle class
+class Triangle extends GeometricObject {
+    private double side1;
+    private double side2;
+    private double side3;
+    public Triangle() {
+        side1 = 1.0;
+        side2 = 1.0;
+        side3 = 1.0;
+    }
+   public Triangle(double side1, double side2, double side3) {
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
+    }
+    public double getSide1() {
+        return side1;
+    }
+    public double getSide2() {
+        return side2;
+    }
+    public double getSide3() {
+        return side3;
+    }
+   public double getArea() {
+        // Implement the formula to calculate the area of the triangle
+        double s = (side1 + side2 + side3) / 2;
+        return Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+    public double getPerimeter() {
+        return side1 + side2 + side3;
+    }
+    @Override
+    public String toString() {
+        return "Triangle: side1 = " + side1 + ", side2 = " + side2 + ", side3 = " + side3;
+    }
+}
+public class TestTriangle {
+    public static void main(String[] args) {
+        // Create scanner object to get user input
+        Scanner scanner = new Scanner(System.in);
+        // Prompt user to enter triangle sides
+        System.out.print("Enter side 1: ");
+        double side1 = scanner.nextDouble();
+        System.out.print("Enter side 2: ");
+        double side2 = scanner.nextDouble();
+        System.out.print("Enter side 3: ");
+        double side3 = scanner.nextDouble();
+        // Prompt user to enter color and filled status
+        System.out.print("Enter color: ");
+        String color = scanner.next();
+        System.out.print("Is filled (true/false): ");
+        boolean filled = scanner.nextBoolean();
+        // Close scanner
+        scanner.close();
+  // Create Triangle object with user input
+        Triangle triangle = new Triangle(side1, side2, side3);
+        triangle.setColor(color);
+        triangle.setFilled(filled);
+        // Display triangle details
+        System.out.println("Area: " + triangle.getArea());
+        System.out.println("Perimeter: " + triangle.getPerimeter());
+        System.out.println("Color: " + triangle.getColor());
+        System.out.println("Filled: " + triangle.isFilled());
+    }
+    // Method to sort an ArrayList of numbers
+    public static void sort(ArrayList<Double> list) {
+        Collections.sort(list);
+    }
+}
+
+Write the following method that sorts an ArrayList of numbers: public static void sort(ArrayList list) Write a test program that prompts the user to enter 5 numbers, stores them in an array list, and displays them in increasing order.
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+public class TestSortNumbers {
+    public static void main(String[] args) {
+        // Create scanner object to get user input
+        Scanner scanner = new Scanner(System.in);
+        // Prompt user to enter 5 numbers
+        System.out.println("Enter 5 numbers:");
+        // Create an ArrayList to store the numbers
+        ArrayList<Double> numbers = new ArrayList<>();
+      // Read 5 numbers from the user and add them to the ArrayList
+        for (int i = 0; i < 5; i++) {
+            System.out.print("Number " + (i + 1) + ": ");
+            double num = scanner.nextDouble();
+            numbers.add(num);
+        }
+    // Close scanner
+        scanner.close();
+  // Sort the numbers
+        sort(numbers);
+     // Display the sorted numbers
+        System.out.println("Sorted numbers:");
+        for (Double num : numbers) {
+            System.out.println(num);
+        }
+    }
+    // Method to sort an ArrayList of numbers
+    public static void sort(ArrayList<Double> list) {
+        Collections.sort(list);
+    }
+}
+
+18.	Write a program that meets the following requirements: Creates an array with 100 randomly chosen integers. Prompts the user to enter the index of the array, then displays the corresponding element value. If the specified index is out of bounds, display the message Out of Bounds.
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class ArrayIndexAccess {
+    public static void main(String[] args) {
+        // Create an array with 100 randomly chosen integers
+        int[] array = createRandomArray(100);
+
+        // Prompt the user to enter the index of the array
+        System.out.print("Enter the index of the array: ");
+        Scanner scanner = new Scanner(System.in);
+        int index = scanner.nextInt();
+        scanner.close();
+
+        // Display the corresponding element value or "Out of Bounds" if index is out of bounds
+        if (index >= 0 && index < array.length) {
+            System.out.println("Element at index " + index + ": " + array[index]);
+        } else {
+            System.out.println("Out of Bounds");
+        }
+    }
+
+    // Method to create an array with random integers
+    public static int[] createRandomArray(int size) {
+        Random random = new Random();
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt(1000); // Generate random integers between 0 and 999
+        }
+        return array;
+    }
+}
+
+19.	Write a program that removes all the occurrences of a specified string from a text file. 
+
+import java.io.*;
+
+public class RemoveStringFromFile {
+    public static void main(String[] args) {
+        String fileName = "input.txt"; // Change this to the path of your input file
+        String outputFileName = "output.txt"; // Change this to the path of your output file
+        String stringToRemove = "specified string"; // Specify the string to remove
+
+        try {
+            File inputFile = new File(fileName);
+            File outputFile = new File(outputFileName);
+
+            // Create file readers and writers
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Remove occurrences of the specified string and write the modified line to the output file
+                line = line.replaceAll(stringToRemove, "");
+                writer.write(line);
+                writer.newLine(); // Add newline character after each line
+            }
+
+            // Close file readers and writers
+            reader.close();
+            writer.close();
+
+            System.out.println("Occurrences of \"" + stringToRemove + "\" removed successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while processing the file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
+
+20.	Write a program that will count the number of characters, words, and lines in a file. Words are separated by whitespace characters.
+
+import java.io.*;
+
+public class FileStats {
+    public static void main(String[] args) {
+        String fileName = "input.txt"; // Change this to the path of your input file
+
+        try {
+            File file = new File(fileName);
+
+            // Create file reader
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            int charCount = 0;
+            int wordCount = 0;
+            int lineCount = 0;
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                // Increment line count
+                lineCount++;
+
+                // Increment character count by the length of the line (including newline characters)
+                charCount += line.length();
+
+                // Split the line into words using whitespace as delimiter
+                String[] words = line.split("\\s+");
+
+                // Increment word count by the number of words in the line
+                wordCount += words.length;
+            }
+
+            // Close the reader
+            reader.close();
+
+            // Display the counts
+            System.out.println("Number of characters: " + charCount);
+            System.out.println("Number of words: " + wordCount);
+            System.out.println("Number of lines: " + lineCount);
+
+        } catch (IOException e) {
+            System.out.println("An error occurred while processing the file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
+
+
+21.	Suppose that a text file contains an unspecified number of scores separated by blanks. Write a program that prompts the user to enter the file, reads the scores from the file, and displays their total and average.
+
+import java.io.*;
+import java.util.Scanner;
+
+public class ScoreAnalyzer {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter the file name
+        System.out.print("Enter the name of the file: ");
+        String fileName = scanner.nextLine();
+
+        try {
+            File file = new File(fileName);
+
+            // Create file reader
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            int total = 0;
+            int count = 0;
+            String line;
+
+            // Read scores from the file and calculate total and count
+            while ((line = reader.readLine()) != null) {
+                // Split the line into scores using whitespace as delimiter
+                String[] scores = line.trim().split("\\s+");
+
+                // Iterate through scores and sum them up
+                for (String score : scores) {
+                    total += Integer.parseInt(score);
+                    count++;
+                }
+            }
+
+            // Close the reader
+            reader.close();
+
+            // Calculate average
+            double average = (double) total / count;
+
+            // Display the total and average
+            System.out.println("Total: " + total);
+            System.out.println("Average: " + average);
+
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("An error occurred while processing the file: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            scanner.close();
+        }
+    }
+}
+
+22.	Write a program to create a file named Exercise12_15.txt if it does not exist. Write 100 integers created randomly into the file using text I/O. Integers are separated by spaces in the file. Read the data back from the file and display the data in increasing order.
+
+import java.io.*;
+import java.util.*;
+
+public class IntegerFileIO {
+    public static void main(String[] args) {
+        // File name
+        String fileName = "Exercise12_15.txt";
+
+        // Generate 100 random integers
+        Random random = new Random();
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            numbers.add(random.nextInt(1000)); // Generating integers between 0 and 999
+        }
+
+        // Write the numbers to the file
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            for (Integer number : numbers) {
+                writer.print(number + " ");
+            }
+            System.out.println("File created and 100 integers written successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file: " + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+
+        // Read the data back from the file and display in increasing order
+        try (Scanner scanner = new Scanner(new FileReader(fileName))) {
+            List<Integer> readNumbers = new ArrayList<>();
+            while (scanner.hasNextInt()) {
+                readNumbers.add(scanner.nextInt());
+            }
+            Collections.sort(readNumbers); // Sort the numbers
+
+            // Display the numbers in increasing order
+            System.out.println("Data read from the file and displayed in increasing order:");
+            for (Integer number : readNumbers) {
+                System.out.print(number + " ");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading from the file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
+
+
